@@ -45,8 +45,9 @@ function downloadPDF(name, id) {
         bread.appendChild(link);
         if (i == 3) return link;
     }    
+    console.log("⨳⨳⨳ 请点击链接下载教材 PDF 文件，正常情况三个链接均有效。⨳⨳⨳");
 }
-downloadPDF(document.title, window.location.href.match(/contentId=([^&]+)/)[1]);
-console.log("⨳⨳⨳ 请点击链接下载教材 PDF 文件，正常情况三个链接均有效。⨳⨳⨳");
+const url = window.location.href.match(/contentId=([^&]+)/)[1];
+downloadPDF(document.title, url);/*.click();*/
 //const link = downloadPDF(document.title, window.location.href.match(/contentId=([^&]+)/)[1]);
 //Anime(link.parentElement);
