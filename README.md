@@ -4,7 +4,7 @@
 
 极简一步下载【**国家智慧教育平台电子教材**】，**无需注册、登录**，**无需下载安装软件和环境**，**粘贴一行** Javascript **代码即可**。
 
-> 这是**【我与孩子一起学编程】系列**的内容。
+> 这是 **【我与孩子一起学编程】系列** 的内容。
 > 
 > 该系列没什么特别的计划，来自于**日常陪伴孩子学习编程的点点滴滴**。
 > 
@@ -37,12 +37,13 @@
 - ——极简：**在浏览器地址栏粘贴下面的代码，在前面补上 `javascript:` 按回车**
 - 看到显眼的下载提示，点击下载：选个保存路径、取个名字（粘贴教材名称），完事。
 
-以上，与你日常操作相比，**只多了一步**。
+以上，与你日常操作相比，**只多一步**。
 
 上面所需 `javascript` 代码（粘贴到地址栏时，在代码开头手工补上后面括号里的字符 [`javascript:`]）：
 
 ```javascript
 javascript: function downloadPDF(name, id) {    const hide = (c) => {        const e = document.getElementsByClassName(c);        if (e && e.length > 0 && e[0]) e[0].style.display = "none";    };    hide("fish-modal-content");    hide("fish-modal-mask");    hide("fish-modal-wrap");    const bread = document.getElementsByClassName("web-breadcrumb")[0];    bread.style.fontSize = '30px';    bread.innerHTML = "SmartEduDownloaderJS v1.1 源码更新地址：<br /><a href='http://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Gitee</a> <br /><a href='http://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Github</a><br /> <span style='color:red'>请点击链接下载教材 PDF 文件，<br />正常情况三个链接均有效：</span><br /> ";    var next = bread.nextElementSibling;    if (next) next.style.display = 'none';     for (let i = 1; i <= 3; i++) {        var link = document.createElement('a');        link.href = `https://r${i}-ndr.ykt.cbern.com.cn/edu_product/esp/assets_document/${id}.pkg/pdf.pdf`;        link.download = name + '.pdf';      /*保存文件时，文件名自动按照教材名字取名，但因为浏览器限制（跨域）可能无效*/        link.target = '_blank';             /*上一句无效时，新窗口打开*/        link.textContent = "《" + name + "》" + ` 链接${i} `;        link.style = "color:blue";        link.style.textDecoration = 'underline';        link.style.cursor = 'pointer';        bread.appendChild(link);        bread.appendChild(document.createElement('br'));        if (i == 3) return link; /* 默认返回第三个连接，用于后续自动下载等 */    }        console.log("⨳⨳⨳ 请点击链接下载教材 PDF 文件，正常情况三个链接均有效。⨳⨳⨳");}var url = window.location.href.match(/contentId=([^&]+)/)[1];downloadPDF(document.title, url);/*.click();*/
+javascript: function downloadPDF(name, id) { const hide = (c) => { const e = document.getElementsByClassName(c); if (e.length > 0 && e[0]) e[0].style.display = "none"; }; hide("fish-modal-content"); hide("fish-modal-mask"); hide("fish-modal-wrap"); const bread = document.getElementsByClassName("web-breadcrumb")[0]; bread.style.fontSize = '30px'; bread.innerHTML = "SmartEduDownloaderJS v1.1 源码更新地址：<a href='http://github.com/CoffeeScholar/SmartEduDownloaderJS' target='_blank'>爱学爸的 Github</a><br /> <span style='color:red'>请点击链接下载教材《" + name + "》PDF 文件，正常情况三个链接均有效：</span><br /> "; var next = bread.nextElementSibling; if (next) next.style.display = 'none'; for (let i = 1; i <= 3; i++) { var link = document.createElement('a'); link.href = `https://r${i}-ndr.ykt.cbern.com.cn/edu_product/esp/assets_document/${id}.pkg/pdf.pdf`; link.download = name + '.pdf';      /*保存文件时，文件名自动按照教材名字取名，但因为浏览器限制（跨域）可能无效*/ link.target = '_blank';             /*上一句无效时，新窗口打开*/ link.textContent = ` 链接${i} `; link.style = "color:blue"; link.style.textDecoration = 'underline'; link.style.cursor = 'pointer'; bread.appendChild(link); bread.appendChild(document.createElement('br')); if (i == 3) return link; /* 默认返回第三个连接，用于后续自动下载等 */ } console.log("⨳⨳⨳ 请点击链接下载教材 PDF 文件，正常情况三个链接均有效。⨳⨳⨳"); } const url = window.location.href.match(/contentId=([^&]+)/)[1]; downloadPDF(document.title, url);
 ```
 
 > 注1：鼠标移动到上面代码框，点击代码狂右上角之 '复制' 图标，即可复制全部代码。
