@@ -23,7 +23,7 @@ function Anime(e) {
 function downloadPDF(name, id) {
     const hide = (c) => {
         const e = document.getElementsByClassName(c);
-        if (e.length > 0 && e[0]) e[0].style.display = "none";
+        if (e && e.length > 0 && e[0]) e[0].style.display = "none";
     };
     hide("fish-modal-content");
     hide("fish-modal-mask");
@@ -31,7 +31,7 @@ function downloadPDF(name, id) {
 
     const bread = document.getElementsByClassName("web-breadcrumb")[0];
     bread.style.fontSize = '30px';
-    bread.innerHTML = "SmartEduDownloaderJS v1.1 源码更新地址：<a href='http://github.com/CoffeeScholar/SmartEduDownloaderJS' target='_blank'>爱学爸的 Github</a><br /> <span style='color:red'>请点击链接下载教材《" + name + "》PDF 文件，正常情况三个链接均有效：</span><br /> ";
+    bread.innerHTML = "SmartEduDownloaderJS v1.1 源码更新地址：<br /><a href='http://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Gitee</a> <br /><a href='http://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Github</a><br /> <span style='color:red'>请点击链接下载教材 PDF 文件，<br />正常情况三个链接均有效：</span><br /> ";
     var next = bread.nextElementSibling;
     if (next) next.style.display = 'none'; 
     for (let i = 1; i <= 3; i++) {
@@ -39,7 +39,7 @@ function downloadPDF(name, id) {
         link.href = `https://r${i}-ndr.ykt.cbern.com.cn/edu_product/esp/assets_document/${id}.pkg/pdf.pdf`;
         link.download = name + '.pdf';      /*保存文件时，文件名自动按照教材名字取名，但因为浏览器限制（跨域）可能无效*/
         link.target = '_blank';             /*上一句无效时，新窗口打开*/
-        link.textContent = ` 链接${i} `;
+        link.textContent = "《" + name + "》" + ` 链接${i} `;
         link.style = "color:blue";
         link.style.textDecoration = 'underline';
         link.style.cursor = 'pointer';
@@ -49,7 +49,7 @@ function downloadPDF(name, id) {
     }    
     console.log("⨳⨳⨳ 请点击链接下载教材 PDF 文件，正常情况三个链接均有效。⨳⨳⨳");
 }
-const url = window.location.href.match(/contentId=([^&]+)/)[1];
+var url = window.location.href.match(/contentId=([^&]+)/)[1];
 downloadPDF(document.title, url);/*.click();*/
 //const link = downloadPDF(document.title, window.location.href.match(/contentId=([^&]+)/)[1]);
 //Anime(link.parentElement);
