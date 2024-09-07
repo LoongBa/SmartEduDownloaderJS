@@ -28,9 +28,19 @@
 > 
 > ——**尤其网络安全领域**。
 
+# 更新说明：
+
+## Ver 1.2 解决了新版本的教材下载问题：用老的方法下载不到最新版本。
+
+## 注意：下载 2024 新版教材需要<u>先登录</u>，不登录可以下载但是老版本——绝大部分教材没有新老版本一说。
+
+>  简单看了一下，推测是官方用最简单的方法打了个“补丁”。
+> 
+> 例如：初一年级（七年级）的语文课本，用原来的方法下载是2016版，用新的方法下载是2024版。
+
 # 一、使用说明
 
-## 1. 极简一步下载：复制粘贴
+## 方法1. 极简一步下载：复制粘贴
 
 - 在浏览器中访问 [国家智慧教育平台](https://basic.smartedu.cn/)，进入【教材】栏目；
 - 找到你感兴趣的电子教材（复制教材名称），出现登录提示——**不需要登录 不需要登录 不需要登录**
@@ -39,10 +49,10 @@
 
 以上，与你日常操作相比，**只多一步**。
 
-上面所需 `javascript` 代码（粘贴到地址栏时，在代码开头手工补上后面括号里的字符 [`javascript:`]）：
+上面所需 `javascript` 代码（粘贴到地址栏时，在代码开头手工补上前缀`javascript:`——浏览器会自动去掉，所以需要手工补上）：
 
 ```javascript
-javascript: function downloadPDF(name, id) {    const hide = (c) => {        const e = document.getElementsByClassName(c);        if (e && e.length > 0 && e[0]) e[0].style.display = "none";    };    hide("fish-modal-content");    hide("fish-modal-mask");    hide("fish-modal-wrap");    const bread = document.getElementsByClassName("web-breadcrumb")[0];    bread.style.fontSize = '30px';    bread.innerHTML = "SmartEduDownloaderJS v1.1 源码更新地址：<br /><a href='http://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Gitee</a> <br /><a href='http://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Github</a><br /> <span style='color:red'>请点击链接下载教材 PDF 文件，<br />正常情况三个链接均有效：</span><br /> ";    var next = bread.nextElementSibling;    if (next) next.style.display = 'none';     for (let i = 1; i <= 3; i++) {        var link = document.createElement('a');        link.href = `https://r${i}-ndr.ykt.cbern.com.cn/edu_product/esp/assets_document/${id}.pkg/pdf.pdf`;        link.download = name + '.pdf';      /*保存文件时，文件名自动按照教材名字取名，但因为浏览器限制（跨域）可能无效*/        link.target = '_blank';             /*上一句无效时，新窗口打开*/        link.textContent = "《" + name + "》" + ` 链接${i} `;        link.style = "color:blue";        link.style.textDecoration = 'underline';        link.style.cursor = 'pointer';        bread.appendChild(link);        bread.appendChild(document.createElement('br'));        if (i == 3) return link; /* 默认返回第三个连接，用于后续自动下载等 */    }        console.log("⨳⨳⨳ 请点击链接下载教材 PDF 文件，正常情况三个链接均有效。⨳⨳⨳");}var url = window.location.href.match(/contentId=([^&]+)/)[1];downloadPDF(document.title, url);/*.click();*/
+javascript:function downloadPDF(name, id) { var bookname = "《" + name + "》"; var pdfPlayer = document.getElementById("pdfPlayerFirefox"); var pdfPath = null; if (pdfPlayer) { var pdfUrl = pdfPlayer.src.match(/file=([^&]+)/)[1]; pdfPath = new URL(pdfUrl).pathname; console.log(pdfPath); } if (!pdfPath) pdfPath = `/edu_product/esp/assets_document/${id}.pkg/pdf.pdf`; const hide = (c) => { const e = document.getElementsByClassName(c); if (e && e.length > 0 && e[0]) e[0].style.display = "none"; }; hide("fish-modal-content"); hide("fish-modal-mask"); hide("fish-modal-wrap"); const bread = document.getElementsByClassName("web-breadcrumb")[0]; bread.style.fontSize = '30px'; bread.innerHTML = "SmartEduDownloaderJS v1.2 源码更新地址：<br /><a href='http://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Gitee</a> | <a href='http://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Github</a><br /> <span style='color:red'>请点击链接下载教材 PDF 文件，<br />正常情况三个链接均有效：</span><br /> "; var next = bread.nextElementSibling; if (next) next.style.display = 'none'; for (let i = 1; i <= 3; i++) { var base = `https://r${i}-ndr.ykt.cbern.com.cn` var link = document.createElement('a'); link.href = `${base}${pdfPath}`; link.download = name + '.pdf';      /*保存文件时，文件名自动按照教材名字取名，但因为浏览器限制（跨域）可能无效*/ link.target = '_blank';             /*上一句无效时，新窗口打开*/ link.textContent = bookname + ` 链接${i} `; link.style = "color:blue"; link.style.textDecoration = 'underline'; link.style.cursor = 'pointer'; link.onclick = () => navigator.clipboard.writeText(bookname).then(() => { console.log('复制书名到剪切板成功。'); }).catch(err => { console.error('复制书名到剪切板失败:', err); }); bread.appendChild(link); bread.appendChild(document.createElement('br')); if (i == 3) return link; /* 默认返回第三个连接，用于后续自动下载等 */ } console.log("⨳⨳⨳ 请点击链接下载教材 PDF 文件，正常情况三个链接均有效。⨳⨳⨳"); } var url = window.location.href.match(/contentId=([^&]+)/)[1]; downloadPDF(document.title, url);
 ```
 
 > 注1：鼠标移动到上面代码框，点击代码狂右上角之 '复制' 图标，即可复制全部代码。
@@ -57,30 +67,28 @@ javascript: function downloadPDF(name, id) {    const hide = (c) => {        con
 
 ![](./images_README/2024-07-05-23-20-14-image.png)
 
-## 2. 不想每次粘贴 的方法：添加到收藏夹，不必每次粘贴
+## 方法2. 进阶——不想每次粘贴 的方法：添加到收藏夹，不必每次粘贴
 
 如果要下载很多教材，每次都复制粘贴这段 `javascript` 代码，**很麻烦，怎么办？**
 
-只需要把上面一步的 `javascript` 代码保存到收藏夹，以后在要下载的课件页面，**在收藏夹中点一下**，即可**代替复制粘贴**。
-
-### 2.1 把代码保存到收藏夹
+### 2.1 把代码保存到收藏夹（只需一次）
 
 1. 添加新收藏（按 `Ctrl-Shift-O` 打开收藏夹，再点 ”创建“ 图标，或直接按 `Ctrl-D`），
    取名字如 【下载电子教材】；
 
 2. 粘贴代码，保存，完事。
    
-   ——切记：**在代码开头手工补上后面括号里的字符 [`javascript:`]**
+   ——切记：**代码开头手别漏了 `javascript:`**
 
 ### 2.2 使用收藏夹的快捷操作
 
 在要下载教材的页面，点选收藏夹中的 【下载电子教材】（上一步取的名字），完事。
 
-## 3. 开发人员工具 F12
+## 方法3. 研究性学习——开发人员工具 F12
 
 有朋友比较熟悉按 F12 打开 `开发人员工具`，也可以把上面的 `javascript` 代码粘贴到 `控制台` 然后运行。
 
-不过，显然最简单的方法是创建标签/收藏。
+## 显然最简单的方法是创建标签/收藏。
 
 # 二、背景说明
 
@@ -90,7 +98,7 @@ javascript: function downloadPDF(name, id) {    const hide = (c) => {        con
 
 其中中小学内容部分又叫做【[国家中小学智慧教育平台](https://basic.smartedu.cn/)】，因为涉及九年制义务教育的教材，按照国家《中华人民共和国义务教育法》之规定，以及2020年2月14日教育部《[关于发布中小学国家课程教材电子版链接的通告](https://www.gov.cn/xinwen/2020-02/14/content_5478551.htm)》将各中小学教材编写出版单位提供的**免费电子版教材**链接统一予以公布，才有了下载电子版教材之说。
 
-![](images/2023-09-07-21-54-23-image.png)
+<img title="" src="./images_README/1f34db7d2d57c11f2d356f9ef0d86eba5a6e5dfe.png" alt="2023-09-07-21-54-23-image.png" width="1302">
 
 其中，我一直从[人民教育出版社的官网](http://www.pep.com.cn/)下载小学课本电子版。后来大概是在2022年，数学教材问题引起的重新修改四年级以后的数学教材，人教社官网上下载不了涉及调整的教材。而后，下载地址从 http://bp.pep.com.cn/jc 改为了现在可用的 https://jc.pep.com.cn/ 。
 
