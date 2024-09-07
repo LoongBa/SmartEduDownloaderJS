@@ -41,7 +41,7 @@ function downloadPDF(name, id) {
 
     const bread = document.getElementsByClassName("web-breadcrumb")[0];
     bread.style.fontSize = '30px';
-    bread.innerHTML = "SmartEduDownloaderJS v1.2 源码更新地址：<br /><a href='http://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Gitee</a> | <a href='http://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Github</a><br /> <span style='color:red'>请点击链接下载教材 PDF 文件，<br />正常情况三个链接均有效：</span><br /> ";
+    bread.innerHTML = "SmartEduDownloaderJS v1.2 源码更新地址：<br /><a href='http://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Github</a> | <a href='http://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Gitee</a><br /> <span style='color:red'>请点击链接下载教材 PDF 文件，<br />正常情况三个链接均有效：</span><br /> ";
     var next = bread.nextElementSibling;
     if (next) next.style.display = 'none'; 
     for (let i = 1; i <= 3; i++) {
