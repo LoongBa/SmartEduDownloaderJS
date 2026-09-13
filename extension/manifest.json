@@ -3,8 +3,9 @@
   "name": "SmartEduDownloader - 国家智慧教育平台教材下载",
   "version": "2.2.0",
   "description": "一键下载国家中小学智慧教育平台电子教材。自动从 PDF 播放器提取地址与 X-ND-AUTH 鉴权头，支持新版 CDN；未登录时高亮登录按钮提示。",
-  "default_locale": null,
-  "permissions": [],
+  "permissions": [
+    "tabs"
+  ],
   "host_permissions": [
     "https://basic.smartedu.cn/*",
     "https://*.smartedu.cn/*",
@@ -23,7 +24,8 @@
     }
   ],
   "action": {
-    "default_title": "SmartEduDownloader：打开教材页面后，右下角会出现下载按钮",
+    "default_title": "SmartEduDownloader：打开教材页右下角出现下载按钮；点击本图标打开菜单",
+    "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",

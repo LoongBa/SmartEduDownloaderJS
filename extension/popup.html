@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 260px;
+      font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: #f5f7fa;
+      color: #333;
+    }
+    .header {
+      background: #1976d2;
+      color: #fff;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header img { width: 20px; height: 20px; }
+    .header .title { font-size: 14px; font-weight: bold; }
+    .header .sub { font-size: 10px; opacity: .8; margin-top: 2px; }
+    .menu { padding: 6px 0; }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #333;
+      font-size: 13px;
+      transition: background .12s ease;
+    }
+    .menu-item:hover { background: #e3f2fd; }
+    .menu-item .icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .menu-item .label { flex: 1; }
+    .menu-item .badge {
+      font-size: 10px;
+      color: #999;
+      flex-shrink: 0;
+    }
+    .divider { height: 1px; background: #e5e7eb; margin: 4px 0; }
+    .footer {
+      padding: 8px 16px;
+      font-size: 11px;
+      color: #999;
+      background: #fff;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="icons/icon48.png" alt="logo">
+    <div>
+      <div class="title">SmartEduDownloader</div>
+      <div class="sub">国家智慧教育平台教材下载</div>
+    </div>
+  </div>
+
+  <div class="menu">
+    <a class="menu-item" href="#" data-url="https://basic.smartedu.cn/tchMaterial">
+      <span class="icon" style="background:#e3f2fd">📚</span>
+      <span class="label">国家智慧教育平台 教材目录</span>
+      <span class="badge"></span>
+    </a>
+    <div class="divider"></div>
+    <a class="menu-item" href="#" data-url="https://loongba.cn">
+      <span class="icon" style="background:#fff3e0">🐉</span>
+      <span class="label">爱学习的龙爸</span>
+      <span class="badge">loongba.cn</span>
+    </a>
+    <a class="menu-item" href="#" data-url="https://github.com/LoongBa/SmartEduDownloaderJS">
+      <span class="icon" style="background:#e8eaf6">🐙</span>
+      <span class="label">Github 仓库（国外）</span>
+      <span class="badge">Github</span>
+    </a>
+    <a class="menu-item" href="#" data-url="https://gitee.com/LoongBa/SmartEduDownloaderJS">
+      <span class="icon" style="background:#e8f5e9">🟢</span>
+      <span class="label">Gitee 仓库（国内）</span>
+      <span class="badge">Gitee</span>
+    </a>
+    <a class="menu-item" href="#" data-url="https://gitcode.com/LoongBa/SmartEduDownloader">
+      <span class="icon" style="background:#fce4ec">🔵</span>
+      <span class="label">GitCode 仓库（国内无需注册）</span>
+      <span class="badge">GitCode</span>
+    </a>
+  </div>
+
+  <div class="footer">v2.2 · 点扩展图标自动打开教材目录</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
