@@ -20,11 +20,20 @@
         128: 'icons/icon128_green.png'
     };
 
+    function isTextbookDetail(url) {
+        return !!(url && /contentId=/.test(url));
+    }
+
+    // 用 URL 直接更新图标（同步，避免异步竞态）
+    function updateIconWithUrl(tabId, url) {
+        if (tabId === undefined || tabId === null) return;
+        chrome.action.setIcon({ tabId: tabId, path: isTextbookDetail(url) ? GREEN_ICON : BLUE_ICON });
+    }
+
     function updateIcon(tabId) {
         chrome.tabs.get(tabId, function (tab) {
             if (chrome.runtime.lastError) return; // 标签页已关闭
-            var isTextbookDetail = !!(tab.url && /contentId=/.test(tab.url));
-            chrome.action.setIcon({ tabId: tabId, path: isTextbookDetail ? GREEN_ICON : BLUE_ICON });
+            updateIconWithUrl(tabId, tab.url);
         });
     }
 
@@ -42,14 +51,15 @@
         updateIcon(info.tabId);
     });
 
-    // 标签页 URL 变化
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
-        if (changeInfo.url) {
-            updateIcon(tabId);
+    // URL 变化 或 页面加载完成 时更新图标
+    // 🔑 F5 刷新同一 URL 不触发 changeInfo.url（URL 未变），但必然触发 status 事件
+    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+        if (changeInfo.url || changeInfo.status === 'complete') {
+            updateIconWithUrl(tabId, tab && tab.url);
         }
     });
 
-    // 窗口焦点变化
+    // 窗口焦点变化（popup 打开也会触发，作为兜底）
     chrome.windows.onFocusChanged.addListener(function (windowId) {
         if (windowId !== chrome.windows.WINDOW_ID_NONE) {
             checkActiveTab();
