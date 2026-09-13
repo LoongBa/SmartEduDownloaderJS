@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "SmartEduDownloader - 国家智慧教育平台教材下载",
+  "version": "2.2.0",
+  "description": "一键下载国家中小学智慧教育平台电子教材。自动从 PDF 播放器提取地址与 X-ND-AUTH 鉴权头，支持新版 CDN；未登录时高亮登录按钮提示。",
+  "default_locale": null,
+  "permissions": [],
+  "host_permissions": [
+    "https://basic.smartedu.cn/*",
+    "https://*.smartedu.cn/*",
+    "https://r1-ndr-private.ykt.cbern.com.cn/*",
+    "https://r2-ndr-private.ykt.cbern.com.cn/*",
+    "https://r3-ndr-private.ykt.cbern.com.cn/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://basic.smartedu.cn/*",
+        "https://*.smartedu.cn/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "SmartEduDownloader：打开教材页面后，右下角会出现下载按钮",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

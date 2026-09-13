@@ -2,7 +2,9 @@
 
 ## SmartEduDownloaderJS
 
-极简一步下载【**国家智慧教育平台电子教材**】，**无需注册、登录**，**无需下载安装软件和环境**，**粘贴一行** Javascript **代码即可**。
+极简一步下载【**国家智慧教育平台电子教材**】，**无需下载安装软件和环境**，**粘贴一行** Javascript **代码即可**。
+
+> **登录说明**：老版本教材**无需登录**即可下载；2024 新版本教材及平台改版后的新 CDN 下载**需要先登录**（需携带登录态生成的鉴权头）。
 
 > 这是 **【我与孩子一起学编程】系列** 的内容。
 > 
@@ -45,7 +47,7 @@
 ## 方法1. 极简一步下载：复制粘贴
 
 - 在浏览器中访问 [国家智慧教育平台](https://basic.smartedu.cn/)，进入【教材】栏目；
-- 找到你感兴趣的电子教材（复制教材名称），出现登录提示——**不需要登录 不需要登录 不需要登录** 除非对应教材有2024新版则需要登录
+- 找到你感兴趣的电子教材（复制教材名称），**老版本教材无需登录**；**2024 新版本教材 / 平台改版后的新 CDN 需要先登录**（下载需携带登录态生成的鉴权头）
 - ——极简：**在浏览器地址栏粘贴下面的代码，在前面补上 `javascript:` 按回车**
 - 看到显眼的下载提示，点击下载：选个保存路径、取个名字（粘贴教材名称），完事。
 
@@ -54,7 +56,7 @@
 上面所需 `javascript` 代码（粘贴到地址栏时，在代码开头手工补上前缀`javascript:`——浏览器会自动去掉，所以需要手工补上）：
 
 ```javascript
-javascript: function downloadPDF(name, id) { var bookname = "《" + name + "》"; var pdfPlayer = document.getElementById("pdfPlayerFirefox"); var pdfPath = null; if (pdfPlayer) { var pdfUrl = pdfPlayer.src.match(/file=([^&]+)/)[1]; pdfPath = new URL(pdfUrl).pathname; console.log(pdfPath); } if (!pdfPath) pdfPath = `/edu_product/esp/assets_document/${id}.pkg/pdf.pdf`; const hide = (c) => { const e = document.getElementsByClassName(c); if (e && e.length > 0 && e[0]) e[0].style.display = "none"; }; hide("fish-modal-content"); hide("fish-modal-mask"); hide("fish-modal-wrap"); const bread = document.getElementsByClassName("web-breadcrumb")[0]; bread.style.fontSize = '30px'; bread.innerHTML = "SmartEduDownloaderJS v1.2 源码更新地址：<br /><a href='http://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>爱学习的龙爸 Gitee</a> | <a href='http://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Github</a><br /> <span style='color:red'>请点击链接下载教材 PDF 文件，<br />正常情况三个链接均有效：</span><br /> "; var next = bread.nextElementSibling; if (next) next.style.display = 'none'; for (let i = 1; i <= 3; i++) { var base = `https://r${i}-ndr.ykt.cbern.com.cn`; var link = document.createElement('a'); link.href = `${base}${pdfPath}`; link.download = name + '.pdf';      /*保存文件时，文件名自动按照教材名字取名，但因为浏览器限制（跨域）可能无效*/ link.target = '_blank';             /*上一句无效时，新窗口打开*/ link.textContent = bookname + ` 链接${i} `; link.style = "color:blue"; link.style.textDecoration = 'underline'; link.style.cursor = 'pointer'; link.onclick = () => navigator.clipboard.writeText(bookname).then(() => { console.log('复制书名到剪切板成功。'); }).catch(err => { console.error('复制书名到剪切板失败:', err); }); bread.appendChild(link); bread.appendChild(document.createElement('br')); if (i == 3) return link; /* 默认返回第三个连接，用于后续自动下载等 */ } console.log("⨳⨳⨳ 请点击链接下载教材 PDF 文件，正常情况三个链接均有效。⨳⨳⨳"); } var url = window.location.href.match(/contentId=([^&]+)/)[1]; downloadPDF(document.title, url);/*.click();*/
+javascript:function checkLogin(){var e=document.querySelector(".user-avatar, .user-name, .header-user, .avatar"),t=document.querySelector('.login-btn, .login-button, [data-action="login"]'),o=localStorage.getItem("token")||localStorage.getItem("access_token"),n=document.cookie.includes("token")||document.cookie.includes("session");return!!(e||o||n)||!t}function showToast(e,t){var o=document.getElementById("smartedu-toast");o&&o.remove();var n=document.createElement("div");n.id="smartedu-toast",n.style.cssText="position:fixed;top:20px;right:20px;padding:16px 24px;border-radius:8px;font-size:16px;font-weight:500;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,.15);max-width:400px;cursor:pointer;";var r={info:{bg:"#e3f2fd",color:"#1565c0",border:"#90caf9",icon:"ℹ️"},warning:{bg:"#fff3e0",color:"#e65100",border:"#ffcc80",icon:"⚠️"},error:{bg:"#ffebee",color:"#c62828",border:"#ef9a9a",icon:"❌"},success:{bg:"#e8f5e9",color:"#2e7d32",border:"#a5d6a7",icon:"✅"}},a=r[t]||r.info;n.style.backgroundColor=a.bg,n.style.color=a.color,n.style.border="2px solid "+a.border,n.innerHTML='<span style="font-size:20px;margin-right:8px">'+a.icon+"</span>"+e,n.onclick=function(){n.remove()},document.body.appendChild(n),setTimeout(function(){n.parentNode&&n.remove()},5e3)}function highlightLoginBtn(){for(var e=[".login-btn",".login-button",'[data-action="login"]',".header-login",".user-login"],t=null,o=0;o<e.length;o++)try{if(t=document.querySelector(e[o]))break}catch(e){}if(!t)for(var n=document.querySelectorAll('button, a, div[role="button"], span[role="button"]'),r=0;r<n.length;r++){var a=n[r].textContent.trim();if(a.includes("登录")||a.includes("Login")){t=n[r];break}}if(t){if(t.style.cssText+=";border:3px solid #ff6b35 !important;animation:smartedu-pulse 1.5s ease-in-out infinite !important;position:relative",t.scrollIntoView({behavior:"smooth",block:"center"}),!document.getElementById("smartedu-anim")){var i=document.createElement("style");i.id="smartedu-anim",i.textContent="@keyframes smartedu-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}",document.head.appendChild(i)}return!0}return!1}function handleNotLoggedIn(){if(showToast("请先登录后再下载教材","warning"),!highlightLoginBtn()){var e=document.createElement("div");e.style.cssText="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:32px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.2);z-index:99998;text-align:center;max-width:400px",e.innerHTML='<div style="font-size:48px;margin-bottom:16px">🔐</div><h3 style="margin:0 0 12px;color:#333">需要先登录</h3><p style="margin:0 0 20px;color:#666;font-size:14px">下载电子教材需要登录国家智慧教育平台账号。</p><button onclick="this.parentElement.remove()" style="background:#1976d2;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer">我知道了</button>',document.body.appendChild(e)}}function getPdfInfo(){var e=document.getElementById("pdfPlayerFirefox");if(e&&e.src){var t=e.src.match(/file=([^&#]+)/),o=e.src.match(/headers=([^&#]+)/);if(t){var n=decodeURIComponent(t[1]),r=null;if(o)try{r=JSON.parse(decodeURIComponent(o[1]))}catch(e){console.warn("解析 headers 失败:",e)}return console.log("PDF URL:",n),console.log("Auth Headers:",r),{url:n,headers:r}}}return null}async function downloadPdfWithAuth(e,t){if(!e||!e.url)return showToast("无法获取 PDF 地址","error"),!1;showToast("正在下载...","info",1e4);try{var o={method:"GET",cache:"reload"};if(e.headers){var n=Object.assign({},e.headers);delete n.range,delete n.Range,o.headers=n}var r=await fetch(e.url,o);if(!r.ok)throw new Error("下载失败: "+r.status);var a=await r.blob();if(a.size<100)throw new Error("下载内容异常: "+a.size+" B");var i=URL.createObjectURL(a),l=document.createElement("a");return l.href=i,l.download=t+".pdf",document.body.appendChild(l),l.click(),document.body.removeChild(l),URL.revokeObjectURL(i),showToast("下载完成","success"),!0}catch(e){return console.error("下载失败:",e),showToast("下载失败: "+e.message,"error"),!1}}function downloadPDF(e,t){var o="《"+e+"》",n=getPdfInfo();if(!n)return showToast("无法获取 PDF 下载地址","error"),null;["fish-modal-content","fish-modal-mask","fish-modal-wrap"].forEach(function(e){var t=document.getElementsByClassName(e);t&&t.length>0&&t[0]&&(t[0].style.display="none")});var r=document.getElementsByClassName("web-breadcrumb")[0];if(!r)return showToast("页面结构异常","error"),null;r.style.fontSize="30px",r.innerHTML="SmartEduDownloaderJS v2.2<br><a href='https://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Github</a> | <a href='https://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Gitee</a><br><span style='color:red'>点击链接下载教材 PDF：</span><br>";var a=r.nextElementSibling;a&&(a.style.display="none");var i=document.createElement("a");i.href="#",i.textContent=o+" 点击下载 ",i.style="color:blue;text-decoration:underline;cursor:pointer;font-size:18px;font-weight:bold",i.onclick=function(t){t.preventDefault(),downloadPdfWithAuth(n,e),navigator.clipboard.writeText(o).then(function(){console.log("复制书名到剪切板成功")}).catch(function(e){console.error("复制书名到剪切板失败:",e)})},r.appendChild(i),r.appendChild(document.createElement("br"));var l=document.createElement("span");l.style.cssText="color:#666;font-size:12px;word-break:break-all",l.textContent="地址: "+n.url,r.appendChild(l),r.appendChild(document.createElement("br"));var d=document.createElement("a");d.href="#",d.textContent="返回 ",d.style="color:green;text-decoration:underline;cursor:pointer;font-size:16px;font-weight:bold",d.onclick=function(e){e.preventDefault(),location.reload()},r.appendChild(d);var c=document.createElement("span");return c.style.cssText="color:#888;font-size:12px;",c.textContent="（点击刷新当前页）",r.appendChild(c),console.log("SmartEduDownloader: 下载链接就绪"),i}var url=window.location.href.match(/contentId=([^&]+)/);if(url)if(checkLogin()){var link=downloadPDF(document.title,url[1]);link&&showToast("下载链接已就绪，点击即可下载","success")}else handleNotLoggedIn();else showToast("无法获取教材 ID","error");
 ```
 
 > 注1：鼠标移动到上面代码框，点击代码狂右上角之 '复制' 图标，即可复制全部代码。
@@ -89,6 +91,31 @@ javascript: function downloadPDF(name, id) { var bookname = "《" + name + "》"
 ## 方法3. 研究性学习——开发人员工具 F12
 
 有朋友比较熟悉按 F12 打开 `开发人员工具`，也可以把上面的 `javascript` 代码粘贴到 `控制台` 然后运行。
+
+## 方法4. 浏览器插件（推荐）：Chrome / Edge
+
+不想每次粘贴代码？本仓库提供 **Chrome / Edge 浏览器插件**（Manifest V3），安装一次，以后打开教材页面右下角自动出现【教材】下载按钮。
+
+### 4.1 安装（开发者模式加载）
+
+1. 下载本仓库代码（Clone 或 Download ZIP），确保 `extension/` 目录完整；
+2. 打开浏览器扩展管理页：
+   - Chrome：地址栏输入 `chrome://extensions/`
+   - Edge：地址栏输入 `edge://extensions/`
+3. 打开右上角【开发者模式】开关；
+4. 点击【加载已解压的扩展程序】，选择本仓库的 `extension` 文件夹；
+5. 安装完成，工具栏出现 SmartEduDownloader 图标。
+
+### 4.2 使用
+
+1. 打开教材详情页（`basic.smartedu.cn/...`），打开教材在线阅读（PDF 预览）；
+2. 页面右下角出现【教材】浮动按钮，点击；
+3. 弹出下载面板：
+   - **老版本教材**：直接点击【下载教材 PDF】即可（无需登录）；
+   - **新版本教材**：需先登录（未登录时会高亮登录按钮并提示）；
+4. 点击【返回】刷新当前页，恢复正常浏览。
+
+> 插件与地址栏粘贴脚本使用同一套逻辑（`SmartEduDownloader.js` v2.2），二者任选其一即可。
 
 ## 显然最简单的方法是创建标签/收藏。
 
