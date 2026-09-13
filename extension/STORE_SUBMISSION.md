@@ -1,35 +1,55 @@
 # Edge Add-ons 商店提交资料（SmartEduDownloader v2.2.0）
+# Edge Add-ons Store Submission Kit (SmartEduDownloader v2.2.0)
 
-> 提交地址：[Partner Center](https://partner.microsoft.com) → Edge 程序 → Create new extension
-> 上传包：`SmartEduDownloader-v2.2.0.zip`（位于仓库根目录，manifest 已在 zip 根目录）
+> 提交地址 / Submit at: [Partner Center](https://partner.microsoft.com) → Edge 程序 → Create new extension
+> 上传包 / Package: `SmartEduDownloader-v2.2.0.zip`（仓库根目录，manifest 已在 zip 根目录 / repo root, manifest at zip root）
 
-## 1. 扩展包（Packages）
+---
 
-- 文件：`SmartEduDownloader-v2.2.0.zip`（13KB，已打包）
+## 一句话描述 / One-line Description
 
-## 2. 可用性（Availability）
+> 帮助用户找到官方免费提供的中小学教材电子版，最新、最权威，并一键下载，方便老师教学、学生自学和家长辅导。
+> Helps users find the latest, most authoritative official free electronic textbooks for primary and secondary schools, and download them with one click — convenient for teachers' instruction, students' self-study, and parents' tutoring.
 
-- **可见性**：Public（公开）
-- **市场**：默认全部（建议先只选"中国"测试，稳定后放开）
+---
 
-## 3. 属性（Properties）
+## 1. 扩展包 / Packages
 
-| 字段 | 值 |
-|------|-----|
-| 类别 | **Education（教育）** |
-| 网站 | https://loongba.cn |
-| 支持联系 | https://loongba.cn（或 loongba 博客留言） |
-| 成人内容 | 否 |
+- 文件 / File：`SmartEduDownloader-v2.2.0.zip`（约 13KB，已打包 / packaged）
+- 上传后 Partner Center 会自动校验 manifest / Partner Center validates the manifest automatically after upload
 
-## 4. 商店列表（Store listings）— 简体中文
+## 2. 可用性 / Availability
 
-### 名称
-`SmartEduDownloader - 国家智慧教育平台教材下载`
+| 字段 / Field | 值 / Value |
+|---|---|
+| 可见性 / Visibility | Public（公开 / Public） |
+| 市场 / Markets | 全部 241 个市场 + 勾选"任何未来市场" / All 241 markets + check "any future market" |
 
-### 短描述（manifest 中的 description，≤132 字符）
-`一键下载国家中小学智慧教育平台电子教材。自动从 PDF 播放器提取地址与 X-ND-AUTH 鉴权头，支持新版 CDN；未登录时高亮登录按钮提示。`
+## 3. 属性 / Properties
 
-### 长描述（≥250 字符，复制以下内容）
+| 字段 / Field | 值 / Value |
+|---|---|
+| 类别 / Category | **Productivity（效率工具）** —— Edge 商店无 Education 分类，下载工具归 Productivity 最贴切 / No Education category in Edge store; Productivity is the best fit for a download utility |
+| 网站 / Website | https://loongba.cn |
+| 支持联系 / Support contact | https://loongba.cn |
+| 成人内容 / Mature content | 否 / No |
+
+## 4. 商店列表 / Store listings — 简体中文 / Simplified Chinese
+
+### 名称 / Name
+
+```
+SmartEduDownloader - 国家智慧教育平台教材下载
+SmartEduDownloader - National Smart Education Platform Textbook Downloader
+```
+
+### 短描述 / Short description（manifest 的 description，≤132 字符 / from manifest, ≤132 chars）
+
+```
+一键下载国家中小学智慧教育平台电子教材。自动从 PDF 播放器提取地址与 X-ND-AUTH 鉴权头，支持新版 CDN；未登录时高亮登录按钮提示。
+```
+
+### 长描述 / Long description（≥250 字符 / ≥250 chars）— 中文版 / Chinese version
 
 ```
 一键下载【国家中小学智慧教育平台】（basic.smartedu.cn）电子教材的浏览器插件，无需安装任何软件。
@@ -57,25 +77,57 @@
 本项目代码出于学习目的，对相关网站主体的权利、电子书籍版权等不构成任何威胁和侵权行为，请勿用于其它用途或牟利。
 ```
 
-### Logo（每语言必填）
-- 文件：`extension/store-logo-300.png`（300×300，蓝色圆底白色下箭头）
+### 长描述 / Long description — English version (if adding en-US)
 
-### 截图（建议 1280×800，最多 6 张）
-需要**实际操作截图**，建议：
-1. 教材详情页：右下角蓝色【教材】浮动按钮（配图标绿色状态）
-2. 点击后弹出的下载面板（书名 + 下载按钮 + 地址 + 返回链接）
-3. 扩展菜单：五个链接（教材目录 / 龙爸 / Github / Gitee / GitCode）
-4. 下载完成提示 Toast（"下载完成"）
-5. 未登录场景：登录按钮高亮 + 浮动提示
-
-> 截图准备：打开 `basic.smartedu.cn` 教材页 → 安装扩展 → 依次截取以上场景。
-
-### 搜索词
 ```
-SmartEduDownloader, 国家智慧教育平台, 智慧教育, 电子教材, 教材下载, 中小学教材, 义务教育, 课本下载, smartedu, 教材PDF, 免费教材
+A browser extension that downloads electronic textbooks from the National Smart Education Platform (basic.smartedu.cn) with one click — no software installation required.
+
+【Features】
+• One-click download: open a textbook page, the 【Textbook】 button appears at the bottom-right; click to download the PDF
+• Automatic authentication: automatically extracts the download URL and X-ND-AUTH auth header from the PDF player, supports the platform's new CDN (r1~r3-ndr-private.ykt.cbern.com.cn)
+• Login reminder: highlights the login button with a floating hint when not logged in (older textbooks need no login; newer editions do)
+• Smart icon: the extension icon turns green on textbook detail pages — downloadable state at a glance
+• Convenient menu: click the extension icon for quick links to the textbook catalog, author blog, and Github/Gitee/GitCode repos
+• Safe return: a 【Back】 button refreshes the page back to normal after download
+
+【How to use】
+1. Log in and open a textbook detail page (URL contains contentId)
+2. Click the 【Textbook】 button at the bottom-right of the page
+3. Click 【Download Textbook PDF】; the file is saved automatically
+
+【Privacy】
+This extension does NOT collect, upload, or share any user data. Everything runs locally in your browser:
+- The download button is injected only on textbook detail pages (content_scripts limited to smartedu.cn)
+- Permissions are used only to: read the current tab URL to switch the icon color, check whether the browser has the platform tab open, and access the textbook CDN for downloading PDFs
+- No remote code, no tracking, no ads
+
+【Disclaimer】
+This project is for learning purposes and does not infringe the rights of the website or the copyright of the e-books. Do not use it for other purposes or profit.
 ```
 
-## 5. 认证说明（Notes for certification）
+### Logo
+
+- 文件 / File：`extension/store-logo-300.png`（300×300，蓝色圆底白色下箭头 / blue rounded square with white down arrow）
+
+### 截图 / Screenshots（建议 1280×800，最多 6 张 / recommended 1280×800, max 6）
+
+1. 教材详情页：右下角蓝色【教材】浮动按钮 + 图标绿色状态 / Textbook detail page with the blue floating button and green icon state
+2. 点击后弹出的下载面板 / Download panel (title + download button + URL + back link)
+3. 扩展菜单：五个链接 / Extension menu with five links
+4. 下载完成提示 / "Download complete" toast
+5. 未登录场景：登录按钮高亮 + 提示 / Not-logged-in state: highlighted login button + hint
+
+> 截图准备：打开 basic.smartedu.cn 教材页 → 安装扩展 → 依次截取 / Take screenshots on a textbook page with the extension installed.
+
+### 搜索词 / Search terms
+
+```
+SmartEduDownloader, 国家智慧教育平台, 智慧教育, 电子教材, 教材下载, 中小学教材, 义务教育, 课本下载, smartedu, 教材PDF, 免费教材, textbook download, education
+```
+
+## 5. 认证说明 / Notes for certification
+
+中文版 / Chinese version：
 
 ```
 1. 测试环境：需要先登录国家中小学智慧教育平台（basic.smartedu.cn），使用任意账号登录后打开教材详情页（URL 含 contentId）。
@@ -89,34 +141,58 @@ SmartEduDownloader, 国家智慧教育平台, 智慧教育, 电子教材, 教材
 4. 扩展不收集任何用户数据，无远程代码。
 ```
 
-## 6. 隐私政策
-
-扩展**不收集任何用户数据**，但仍需按商店要求提供隐私政策 URL。建议在 loongba.cn 挂一页，文本模板：
+English version：
 
 ```
-# 隐私政策 - SmartEduDownloader
-
-SmartEduDownloader 浏览器扩展（下称"本扩展"）尊重并保护您的个人隐私。
-
-## 数据收集
-本扩展【不收集、不存储、不上传、不共享】任何个人数据。所有功能均在您的浏览器本地完成。
-
-## 权限说明
-1. tabs：仅用于检测浏览器是否已打开国家智慧教育平台标签页，以及切换扩展图标颜色（教材详情页变绿）。
-2. host_permissions（仅限定以下域名）：
-   - basic.smartedu.cn / *.smartedu.cn：注入下载按钮
-   - r1~r3-ndr-private.ykt.cbern.com.cn：携带平台生成的鉴权头下载教材 PDF
-3. 本扩展不读取、不修改、不发送您的任何个人信息、浏览历史、账号数据。
-
-## 数据共享
-本扩展不向任何第三方共享任何数据。
-
-## 联系我们
-如有疑问，请通过 https://loongba.cn 联系我们。
-
-最后更新：2026-09-14
+1. Test environment: log in to the National Smart Education Platform (basic.smartedu.cn) with any account, then open a textbook detail page (URL contains contentId).
+2. Test steps:
+   a. Open https://basic.smartedu.cn/tchMaterial and enter any textbook detail page;
+   b. Wait for the PDF preview to finish loading (pdfPlayerFirefox iframe);
+   c. Click the 【Textbook】 floating button at the bottom-right of the page;
+   d. Click 【Download Textbook PDF】 in the panel; the browser starts downloading;
+   e. When not logged in, clicking the button highlights the page login button and shows a hint.
+3. Permissions: the "tabs" permission only checks whether the browser has the platform tab open (to decide whether to auto-open the catalog) and switches the icon color; host_permissions are limited to smartedu.cn and the textbook CDN domains.
+4. The extension collects no user data and uses no remote code.
 ```
 
-## 7. 版本记录（每次提交需递增 version）
+## 6. 隐私政策 / Privacy policy
 
-- 2.2.0：首次发布
+- URL：`https://github.com/LoongBa/SmartEduDownloaderJS/blob/main/PRIVACY.md`（仓库内 / in repo）
+- 提示：需先 `git push` 到 GitHub 后 URL 才可访问 / Note: push to GitHub first so the URL is accessible
+- 扩展不收集数据，但建议填写以满足审核 / The extension collects no data, but filling it in is recommended for review
+
+## 7. 权限说明 / Permission justification（1000 字符内 / within 1000 chars each）
+
+### tabs justification
+
+```
+The "tabs" permission is used only to: 1) check whether the browser has a tab open on the National Smart Education Platform (basic.smartedu.cn) when the extension menu opens, and open the official textbook catalog in a background tab if none exists; 2) read the current active tab's URL to determine whether it is a textbook detail page (URL contains "contentId"), so the extension icon turns green (downloadable state) or blue. No other page content is read, stored, or uploaded.
+【中文】tabs 权限仅用于检测浏览器是否已打开教材平台标签页（无则后台打开教材目录），以及读取当前标签页 URL 切换图标颜色。不读取/存储/上传任何其他内容。
+```
+
+### Host permission justification
+
+```
+Host permissions are strictly limited to two domain groups: 1) basic.smartedu.cn and *.smartedu.cn, where the content script injects the download button on textbook detail pages only; 2) r1/r2/r3-ndr-private.ykt.cbern.com.cn, the CDN that serves textbook PDF files, which requires the platform-generated X-ND-AUTH header during download (otherwise the CDN returns 401). No <all_urls> or other wildcard permissions are requested; every permission is required for the single purpose of downloading textbook PDFs.
+【中文】host_permissions 仅限教材平台域名（注入下载按钮）与教材 PDF 的 CDN 域名（携带 X-ND-AUTH 鉴权头下载）。无任何通配权限，全部为单一下载用途所需。
+```
+
+### Are you using remote code? → 选 / Select **No**
+
+```
+The extension does not use any remote code. All JavaScript (content.js, popup.js, background.js) and resources (HTML, CSS, icons) are bundled in the package; no external <script>, no dynamic external modules, no eval() of remote strings.
+【中文】扩展无远程代码，全部 JS 与资源均打包在扩展包内。
+```
+
+### Data usage
+
+- 全部选"不收集" / Select "no data collected" for all
+
+### Certification checkboxes
+
+- 三个声明全部勾选 / Check all three certification boxes
+
+## 8. 版本记录 / Version history
+
+- 2.2.0：首次发布 / First release
+- 每次提交需递增 version / Increment version for each submission
