@@ -59,6 +59,35 @@
       border-top: 1px solid #eee;
       text-align: center;
     }
+    .download-view { padding: 16px; text-align: center; }
+    .download-view .book { font-size: 13px; color: #555; margin-bottom: 12px; word-break: break-all; }
+    .download-view .btn {
+      display: block;
+      background: #4caf50;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 0;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .download-view .btn:hover { background: #43a047; }
+    .download-view .more {
+      display: block;
+      margin-top: 10px;
+      color: #1976d2;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .status {
+      padding: 8px 16px;
+      font-size: 12px;
+      color: #666;
+      background: #fff8e1;
+      border-bottom: 1px solid #ffe082;
+    }
   </style>
 </head>
 <body>
@@ -70,37 +99,7 @@
     </div>
   </div>
 
-  <div class="menu">
-    <div id="status" style="padding:8px 16px;font-size:12px;color:#666;background:#fff8e1;border-bottom:1px solid #ffe082">⏳ 正在检测教材平台标签页...</div>
-    <a class="menu-item" href="#" data-url="https://basic.smartedu.cn/tchMaterial">
-      <span class="icon" style="background:#e3f2fd">📚</span>
-      <span class="label">国家智慧教育平台 教材目录</span>
-      <span class="badge"></span>
-    </a>
-    <div class="divider"></div>
-    <a class="menu-item" href="#" data-url="https://loongba.cn">
-      <span class="icon" style="background:#fff3e0">🐉</span>
-      <span class="label">爱学习的龙爸</span>
-      <span class="badge">loongba.cn</span>
-    </a>
-    <a class="menu-item" href="#" data-url="https://github.com/LoongBa/SmartEduDownloaderJS">
-      <span class="icon" style="background:#e8eaf6">🐙</span>
-      <span class="label">Github 仓库（国外）</span>
-      <span class="badge">Github</span>
-    </a>
-    <a class="menu-item" href="#" data-url="https://gitee.com/LoongBa/SmartEduDownloaderJS">
-      <span class="icon" style="background:#e8f5e9">🟢</span>
-      <span class="label">Gitee 仓库（国内）</span>
-      <span class="badge">Gitee</span>
-    </a>
-    <a class="menu-item" href="#" data-url="https://gitcode.com/LoongBa/SmartEduDownloader">
-      <span class="icon" style="background:#fce4ec">🔵</span>
-      <span class="label">GitCode 仓库（国内无需注册）</span>
-      <span class="badge">GitCode</span>
-    </a>
-  </div>
-
-  <div class="footer">v2.2 · 点扩展图标自动打开教材目录</div>
+  <div id="content"></div>
 
   <script src="popup.js"></script>
 </body>

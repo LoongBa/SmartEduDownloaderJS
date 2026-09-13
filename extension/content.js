@@ -186,7 +186,7 @@
 
         panel = document.createElement('div');
         panel.id = 'smartedu-panel';
-        panel.style.cssText = 'position:fixed;right:20px;bottom:90px;width:340px;max-width:90vw;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.2);z-index:2147483646;padding:16px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;';
+        panel.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:340px;max-width:90vw;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.25);z-index:2147483646;padding:16px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;';
 
         var bookname = '《' + name + '》';
         panel.innerHTML =
@@ -196,7 +196,7 @@
             '</div>' +
             '<div style="font-size:14px;color:#555;margin-bottom:12px;word-break:break-all">' + bookname + '</div>' +
             '<div style="margin-bottom:10px">' +
-            '<a id="smartedu-panel-dl" href="#" style="display:block;text-align:center;background:#1976d2;color:#fff;text-decoration:none;padding:10px 0;border-radius:6px;font-size:15px;font-weight:bold">⬇ 点击下载教材 PDF</a>' +
+            '<a id="smartedu-panel-dl" href="#" style="display:block;text-align:center;background:#4caf50;color:#fff;text-decoration:none;padding:10px 0;border-radius:6px;font-size:15px;font-weight:bold">⬇ 点击下载教材 PDF</a>' +
             '</div>' +
             '<div style="display:flex;justify-content:flex-end;align-items:center;border-top:1px solid #eee;padding-top:8px">' +
             '<a href="https://loongba.cn" target="_blank" rel="noopener" style="color:#1976d2;text-decoration:none;font-size:13px;font-weight:bold">更多免费教育资源 →</a>' +
@@ -265,10 +265,19 @@
         console.log('SmartEduDownloader: 插件已就绪，点击右下角按钮下载教材');
     }
 
-    // 扩展图标点击（详情页）→ 打开下载面板
-    chrome.runtime.onMessage.addListener(function (message) {
-        if (message && message.type === 'smartedu-download') {
+    // 扩展图标点击（详情页）→ 打开下载面板；popup 请求教材信息
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if (!message) return;
+        if (message.type === 'smartedu-download') {
             openDownloadPanel();
+        } else if (message.type === 'smartedu-get-info') {
+            var pdfInfo = getPdfInfo();
+            var bookname = '';
+            if (pdfInfo && pdfInfo.url) {
+                var m = document.title;
+                bookname = m || '教材';
+            }
+            sendResponse({ bookname: bookname, url: pdfInfo ? pdfInfo.url : '' });
         }
     });
 })();
