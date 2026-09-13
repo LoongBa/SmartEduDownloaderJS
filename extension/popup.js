@@ -24,7 +24,7 @@
                 '</div>';
 
             document.getElementById('dl-btn').addEventListener('click', function () {
-                chrome.tabs.sendMessage(tab.id, { type: 'smartedu-download' }, function () {
+                chrome.tabs.sendMessage(tab.id, { type: 'smartedu-download-direct' }, function () {
                     if (chrome.runtime.lastError) {
                         console.warn('content script 未响应:', chrome.runtime.lastError.message);
                     }

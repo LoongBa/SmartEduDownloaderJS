@@ -270,12 +270,19 @@
         if (!message) return;
         if (message.type === 'smartedu-download') {
             openDownloadPanel();
+        } else if (message.type === 'smartedu-download-direct') {
+            // popup 菜单下载按钮：直接下载，不弹面板
+            var pi = getPdfInfo();
+            if (pi) {
+                downloadPdfWithAuth(pi, document.title);
+            } else {
+                showToast('未找到 PDF 预览，请先打开教材在线阅读', 'warning');
+            }
         } else if (message.type === 'smartedu-get-info') {
             var pdfInfo = getPdfInfo();
             var bookname = '';
             if (pdfInfo && pdfInfo.url) {
-                var m = document.title;
-                bookname = m || '教材';
+                bookname = document.title || '教材';
             }
             sendResponse({ bookname: bookname, url: pdfInfo ? pdfInfo.url : '' });
         }
