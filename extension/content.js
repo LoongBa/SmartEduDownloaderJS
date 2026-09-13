@@ -190,16 +190,15 @@
 
         var bookname = '《' + name + '》';
         panel.innerHTML =
-            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">' +
-            '<span style="font-size:15px;font-weight:bold;color:#333">中小学教材免费下载 v2.2</span>' +
-            '<span id="smartedu-panel-close" style="cursor:pointer;color:#999;font-size:18px;line-height:1">✕</span>' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin:-16px -16px 12px;padding:12px 16px;background:#1976d2;color:#fff;border-radius:12px 12px 0 0">' +
+            '<span style="font-size:15px;font-weight:bold;color:#fff">中小学教材免费下载 v2.2</span>' +
+            '<span id="smartedu-panel-close" style="cursor:pointer;color:#fff;font-size:18px;line-height:1">✕</span>' +
             '</div>' +
             '<div style="font-size:14px;color:#555;margin-bottom:12px;word-break:break-all">' + bookname + '</div>' +
             '<div style="margin-bottom:10px">' +
             '<a id="smartedu-panel-dl" href="#" style="display:block;text-align:center;background:#1976d2;color:#fff;text-decoration:none;padding:10px 0;border-radius:6px;font-size:15px;font-weight:bold">⬇ 点击下载教材 PDF</a>' +
             '</div>' +
-            '<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;padding-top:8px">' +
-            '<a id="smartedu-panel-back" href="#" style="color:#888;text-decoration:none;font-size:13px">关闭</a>' +
+            '<div style="display:flex;justify-content:flex-end;align-items:center;border-top:1px solid #eee;padding-top:8px">' +
             '<a href="https://loongba.cn" target="_blank" rel="noopener" style="color:#1976d2;text-decoration:none;font-size:13px;font-weight:bold">更多免费教育资源 →</a>' +
             '</div>';
 
@@ -214,10 +213,6 @@
             }).catch(function (err) {
                 console.error('复制书名到剪切板失败:', err);
             });
-        };
-        panel.querySelector('#smartedu-panel-back').onclick = function (e) {
-            e.preventDefault();
-            panel.remove();
         };
     }
 
