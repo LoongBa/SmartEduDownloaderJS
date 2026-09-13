@@ -202,7 +202,7 @@ function downloadPDF(name, id) {
     }
 
     bread.style.fontSize = '30px';
-    bread.innerHTML = "SmartEduDownloaderJS v2.2<br><a href='https://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Github</a> | <a href='https://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Gitee</a><br><span style='color:red'>点击链接下载教材 PDF：</span><br>";
+    bread.innerHTML = "中小学教材免费下载 v2.2<br><a href='https://github.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Github</a> | <a href='https://gitee.com/LoongBa/SmartEduDownloaderJS' target='_blank'>Gitee</a><br><span style='color:red'>点击链接下载教材 PDF：</span><br>";
 
     var next = bread.nextElementSibling;
     if (next) next.style.display = 'none';

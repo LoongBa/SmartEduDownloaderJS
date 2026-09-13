@@ -191,7 +191,7 @@
         var bookname = '《' + name + '》';
         panel.innerHTML =
             '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">' +
-            '<span style="font-size:15px;font-weight:bold;color:#333">SmartEduDownloader v2.2</span>' +
+            '<span style="font-size:15px;font-weight:bold;color:#333">中小学教材免费下载 v2.2</span>' +
             '<span id="smartedu-panel-close" style="cursor:pointer;color:#999;font-size:18px;line-height:1">✕</span>' +
             '</div>' +
             '<div style="font-size:14px;color:#555;margin-bottom:12px;word-break:break-all">' + bookname + '</div>' +

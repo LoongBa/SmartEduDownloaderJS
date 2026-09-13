@@ -1,10 +1,10 @@
-# 隐私政策 — SmartEduDownloader
+# 隐私政策 — 中小学教材免费下载
 
 最后更新：2026-09-14
 
 ## 概述
 
-SmartEduDownloader（含浏览器脚本 `SmartEduDownloader.js` 与浏览器扩展 SmartEduDownloader Extension，下称"本软件"）尊重并保护您的个人隐私。本页说明本软件对权限的使用方式。
+中小学教材免费下载（含浏览器脚本 `SmartEduDownloader.js` 与同名浏览器扩展，下称"本软件"）尊重并保护您的个人隐私。本页说明本软件对权限的使用方式。
 
 ## 一、数据收集
 

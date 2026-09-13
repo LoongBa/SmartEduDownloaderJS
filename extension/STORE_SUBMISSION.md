@@ -1,8 +1,8 @@
-# Edge Add-ons 商店提交资料（SmartEduDownloader v2.2.0）
-# Edge Add-ons Store Submission Kit (SmartEduDownloader v2.2.0)
+# Edge Add-ons 商店提交资料（中小学教材免费下载 v2.2.1）
+# Edge Add-ons Store Submission Kit (Free Primary & Secondary Textbook Download v2.2.1)
 
 > 提交地址 / Submit at: [Partner Center](https://partner.microsoft.com) → Edge 程序 → Create new extension
-> 上传包 / Package: `SmartEduDownloader-v2.2.0.zip`（仓库根目录，manifest 已在 zip 根目录 / repo root, manifest at zip root）
+> 上传包 / Package: `SmartEduDownloader-v2.2.1.zip`（仓库根目录，manifest 已在 zip 根目录 / repo root, manifest at zip root）
 
 ---
 
@@ -15,7 +15,7 @@
 
 ## 1. 扩展包 / Packages
 
-- 文件 / File：`SmartEduDownloader-v2.2.0.zip`（约 13KB，已打包 / packaged）
+- 文件 / File：`SmartEduDownloader-v2.2.1.zip`（约 13KB，已打包 / packaged）
 - 上传后 Partner Center 会自动校验 manifest / Partner Center validates the manifest automatically after upload
 
 ## 2. 可用性 / Availability
@@ -39,8 +39,8 @@
 ### 名称 / Name
 
 ```
-SmartEduDownloader - 国家智慧教育平台教材下载
-SmartEduDownloader - National Smart Education Platform Textbook Downloader
+中小学教材免费下载
+Free Primary & Secondary Textbook Download
 ```
 
 ### 短描述 / Short description（manifest 的 description，≤132 字符 / from manifest, ≤132 chars）
@@ -122,7 +122,7 @@ This project is for learning purposes and does not infringe the rights of the we
 ### 搜索词 / Search terms
 
 ```
-SmartEduDownloader, 国家智慧教育平台, 智慧教育, 电子教材, 教材下载, 中小学教材, 义务教育, 课本下载, smartedu, 教材PDF, 免费教材, textbook download, education
+中小学, 免费, 智慧教育, 教材, 课本, 义务教育
 ```
 
 ## 5. 认证说明 / Notes for certification
@@ -194,5 +194,5 @@ The extension does not use any remote code. All JavaScript (content.js, popup.js
 
 ## 8. 版本记录 / Version history
 
-- 2.2.0：首次发布 / First release
+- 2.2.1：改名「中小学教材免费下载」并首次发布 / Renamed and first release
 - 每次提交需递增 version / Increment version for each submission

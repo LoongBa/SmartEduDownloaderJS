@@ -1,4 +1,4 @@
-# SmartEduDownloader 浏览器插件
+# 中小学教材免费下载 浏览器插件
 
 一键下载【国家智慧教育平台】电子教材的 Chrome / Edge 浏览器插件（Manifest V3）。
 
@@ -23,7 +23,7 @@
    - Chrome：地址栏输入 `chrome://extensions/`
 3. 打开右上角【**开发者模式**】开关；
 4. 点击【**加载已解压的扩展程序**】，选择本仓库的 **`extension`** 文件夹；
-5. 安装完成，工具栏出现 SmartEduDownloader 图标。
+5. 安装完成，工具栏出现「中小学教材免费下载」图标。
 
 ## 使用说明
 
