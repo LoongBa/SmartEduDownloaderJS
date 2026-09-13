@@ -178,7 +178,7 @@
         }
     }
 
-    // ==================== 结果面板（含"返回"刷新链接） ====================
+    // ==================== 结果面板（下载 + 关闭 + 更多资源） ====================
 
     function showResultPanel(pdfInfo, name) {
         var panel = document.getElementById('smartedu-panel');
@@ -198,10 +198,9 @@
             '<div style="margin-bottom:10px">' +
             '<a id="smartedu-panel-dl" href="#" style="display:block;text-align:center;background:#1976d2;color:#fff;text-decoration:none;padding:10px 0;border-radius:6px;font-size:15px;font-weight:bold">⬇ 点击下载教材 PDF</a>' +
             '</div>' +
-            '<div style="font-size:12px;color:#888;word-break:break-all;margin-bottom:10px;border-top:1px solid #eee;padding-top:8px">地址: ' + pdfInfo.url + '</div>' +
-            '<div style="text-align:center;border-top:1px solid #eee;padding-top:8px">' +
-            '<a id="smartedu-panel-back" href="#" style="color:#2e7d32;text-decoration:underline;font-size:14px;font-weight:bold">返回</a>' +
-            '<span style="color:#999;font-size:12px;margin-left:4px">（点击刷新当前页）</span>' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;padding-top:8px">' +
+            '<a id="smartedu-panel-back" href="#" style="color:#888;text-decoration:none;font-size:13px">关闭</a>' +
+            '<a href="https://loongba.cn" target="_blank" rel="noopener" style="color:#1976d2;text-decoration:none;font-size:13px;font-weight:bold">更多免费教育资源 →</a>' +
             '</div>';
 
         document.body.appendChild(panel);
@@ -218,7 +217,7 @@
         };
         panel.querySelector('#smartedu-panel-back').onclick = function (e) {
             e.preventDefault();
-            location.reload();
+            panel.remove();
         };
     }
 
