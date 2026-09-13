@@ -6,6 +6,9 @@
   "permissions": [
     "tabs"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "host_permissions": [
     "https://basic.smartedu.cn/*",
     "https://*.smartedu.cn/*",

@@ -1,15 +1,22 @@
 /*
  * SmartEduDownloader - popup 菜单逻辑
  *
- * 1. 打开 popup 时：若浏览器当前没有任何国家智慧教育平台标签页，
- *    自动打开官网教材目录 https://basic.smartedu.cn/tchMaterial
- * 2. 菜单链接：点击后在新标签页打开对应地址
+ * 1. 打开 popup 时：若浏览器没有任何国家智慧教育平台标签页，
+ *    在【后台】打开官网教材目录 https://basic.smartedu.cn/tchMaterial
+ *    （不抢焦点，避免 popup 被关闭）
+ * 2. 菜单链接：点击后在新标签页前台打开对应地址
  */
 (function () {
     'use strict';
 
-    // 打开（或激活）国家智慧教育平台的标签页
-    function openOrActivateEduTab() {
+    var statusEl = document.getElementById('status');
+
+    function showStatus(text) {
+        if (statusEl) statusEl.textContent = text;
+    }
+
+    // 确保有国家智慧教育平台的标签页（后台打开，不干扰 popup）
+    function ensureEduTab() {
         chrome.tabs.query({}, function (tabs) {
             var eduTab = null;
             for (var i = 0; i < tabs.length; i++) {
@@ -20,19 +27,18 @@
             }
 
             if (eduTab) {
-                // 已有教材平台标签页 → 直接激活
-                chrome.tabs.update(eduTab.id, { active: true });
-                if (!eduTab.windowId || chrome.windows) {
-                    chrome.windows.update(eduTab.windowId, { focused: true });
-                }
+                showStatus('✅ 已在国家智慧教育平台');
             } else {
-                // 没有 → 打开官网教材目录
-                chrome.tabs.create({ url: 'https://basic.smartedu.cn/tchMaterial' });
+                chrome.tabs.create({
+                    url: 'https://basic.smartedu.cn/tchMaterial',
+                    active: false
+                });
+                showStatus('📖 教材目录已在后台打开');
             }
         });
     }
 
-    // 菜单链接点击：在新标签页打开
+    // 菜单链接点击：新标签页前台打开
     document.querySelectorAll('.menu-item').forEach(function (item) {
         item.addEventListener('click', function (e) {
             e.preventDefault();
@@ -43,6 +49,6 @@
         });
     });
 
-    // 打开 popup 时执行：确保有教材平台标签页
-    openOrActivateEduTab();
+    // 打开 popup 时执行
+    ensureEduTab();
 })();
