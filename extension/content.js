@@ -224,6 +224,25 @@
 
     // ==================== 浮动下载按钮 ====================
 
+    // 打开下载面板（浮动按钮与扩展图标点击共用）
+    function openDownloadPanel() {
+        var urlMatch = window.location.href.match(/contentId=([^&]+)/);
+        if (!urlMatch) {
+            showToast('无法获取教材 ID，请打开教材详情页', 'error');
+            return;
+        }
+        if (!checkLogin()) {
+            handleNotLoggedIn();
+            return;
+        }
+        var pdfInfo = getPdfInfo();
+        if (!pdfInfo) {
+            showToast('未找到 PDF 预览，请先打开教材在线阅读', 'warning');
+            return;
+        }
+        showResultPanel(pdfInfo, document.title);
+    }
+
     function createFab() {
         var fab = document.getElementById('smartedu-fab');
         if (fab) return;
@@ -237,21 +256,7 @@
         fab.onmouseenter = function () { fab.style.transform = 'scale(1.08)'; };
         fab.onmouseleave = function () { fab.style.transform = 'scale(1)'; };
         fab.onclick = function () {
-            var urlMatch = window.location.href.match(/contentId=([^&]+)/);
-            if (!urlMatch) {
-                showToast('无法获取教材 ID，请打开教材详情页', 'error');
-                return;
-            }
-            if (!checkLogin()) {
-                handleNotLoggedIn();
-                return;
-            }
-            var pdfInfo = getPdfInfo();
-            if (!pdfInfo) {
-                showToast('未找到 PDF 预览，请先打开教材在线阅读', 'warning');
-                return;
-            }
-            showResultPanel(pdfInfo, document.title);
+            openDownloadPanel();
         };
 
         document.body.appendChild(fab);
@@ -265,4 +270,11 @@
         createFab();
         console.log('SmartEduDownloader: 插件已就绪，点击右下角按钮下载教材');
     }
+
+    // 扩展图标点击（详情页）→ 打开下载面板
+    chrome.runtime.onMessage.addListener(function (message) {
+        if (message && message.type === 'smartedu-download') {
+            openDownloadPanel();
+        }
+    });
 })();
