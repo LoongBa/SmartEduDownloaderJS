@@ -23,7 +23,7 @@
 | 字段 / Field | 值 / Value |
 |---|---|
 | 可见性 / Visibility | Public（公开 / Public） |
-| 市场 / Markets | 全部 241 个市场 + 勾选"任何未来市场" / All 241 markets + check "any future market" |
+| 市场 / Markets | **仅中国（先小范围发布，稳定后放开）** / **China only (pilot, expand later)** |
 
 ## 3. 属性 / Properties
 
