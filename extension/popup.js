@@ -22,7 +22,8 @@
                 '<a class="btn" id="dl-btn">⬇ 下载教材 PDF</a>' +
                 '<div class="downloaded-hint" id="dl-hint"></div>' +
                 '<a class="more" href="https://loongba.cn" target="_blank" rel="noopener">更多免费教育资源 →</a>' +
-                '</div>';
+                '</div>' +
+                dlSectionHtml();
 
             // 已下载过提示：比对当前 contentId
             var idMatch = (tab.url || '').match(/contentId=([^&]+)/);
@@ -34,6 +35,9 @@
                     hintEl.textContent = '✓ 已下载过';
                 }
             });
+
+            // 渲染已下载列表 + 清空
+            initDownloadedSection();
 
             document.getElementById('dl-btn').addEventListener('click', function () {
                 chrome.tabs.sendMessage(tab.id, { type: 'smartedu-download-direct' }, function () {
@@ -47,6 +51,30 @@
     }
 
     // ==================== 已下载列表 ====================
+
+    // 已下载列表区 HTML（横线 + 列表 + 清空），两种视图共用
+    function dlSectionHtml() {
+        return '<div class="dl-divider"></div>' +
+            '<div class="dl-section">' +
+            '<div class="dl-header">已下载列表 <a href="#" id="dl-clear" class="dl-clear">清空</a></div>' +
+            '<div class="dl-list" id="dl-list"></div>' +
+            '</div>';
+    }
+
+    // 渲染列表 + 绑定清空按钮
+    function initDownloadedSection() {
+        renderDownloadedList();
+        var clearBtn = document.getElementById('dl-clear');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                chrome.storage.local.remove('downloaded', function () {
+                    var list = document.getElementById('dl-list');
+                    if (list) list.innerHTML = '<div class="dl-empty">（空）</div>';
+                });
+            });
+        }
+    }
 
     // 渲染已下载列表（小字），最新在前
     function renderDownloadedList() {
@@ -114,10 +142,7 @@
             '<span class="badge">GitCode</span>' +
             '</a>' +
             '</div>' +
-            '<div class="dl-section" id="dl-section">' +
-            '<div class="dl-header">已下载列表 <a href="#" id="dl-clear" class="dl-clear">清空</a></div>' +
-            '<div class="dl-list" id="dl-list"></div>' +
-            '</div>';
+            dlSectionHtml();
 
         // 菜单链接点击：新标签页打开
         content.querySelectorAll('.menu-item').forEach(function (item) {
@@ -129,19 +154,7 @@
         });
 
         // 渲染已下载列表 + 清空
-        renderDownloadedList();
-
-        // 清空按钮
-        var clearBtn = document.getElementById('dl-clear');
-        if (clearBtn) {
-            clearBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                chrome.storage.local.remove('downloaded', function () {
-                    var list = document.getElementById('dl-list');
-                    if (list) list.innerHTML = '<div class="dl-empty">（空）</div>';
-                });
-            });
-        }
+        initDownloadedSection();
 
         // 检测教材平台标签页状态（无则后台打开教材目录）
         chrome.tabs.query({}, function (tabs) {
