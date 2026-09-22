@@ -20,8 +20,20 @@
                 '<div class="download-view">' +
                 '<div class="book">《' + bookname + '》</div>' +
                 '<a class="btn" id="dl-btn">⬇ 下载教材 PDF</a>' +
+                '<div class="downloaded-hint" id="dl-hint"></div>' +
                 '<a class="more" href="https://loongba.cn" target="_blank" rel="noopener">更多免费教育资源 →</a>' +
                 '</div>';
+
+            // 已下载过提示：比对当前 contentId
+            var idMatch = (tab.url || '').match(/contentId=([^&]+)/);
+            var contentId = idMatch ? idMatch[1] : null;
+            chrome.storage.local.get({ downloaded: {} }, function (data) {
+                var downloaded = data.downloaded || {};
+                var hintEl = document.getElementById('dl-hint');
+                if (hintEl && contentId && downloaded[contentId]) {
+                    hintEl.textContent = '✓ 已下载过';
+                }
+            });
 
             document.getElementById('dl-btn').addEventListener('click', function () {
                 chrome.tabs.sendMessage(tab.id, { type: 'smartedu-download-direct' }, function () {
@@ -32,6 +44,42 @@
                 });
             });
         });
+    }
+
+    // ==================== 已下载列表 ====================
+
+    // 渲染已下载列表（小字），最新在前
+    function renderDownloadedList() {
+        var listEl = document.getElementById('dl-list');
+        if (!listEl) return;
+        chrome.storage.local.get({ downloaded: {} }, function (data) {
+            var downloaded = data.downloaded || {};
+            var entries = [];
+            for (var id in downloaded) {
+                if (downloaded.hasOwnProperty(id)) {
+                    entries.push({ id: id, bookname: downloaded[id].bookname, time: downloaded[id].time });
+                }
+            }
+            entries.sort(function (a, b) { return (b.time || 0) - (a.time || 0); }); // 最新在前
+
+            if (entries.length === 0) {
+                listEl.innerHTML = '<div class="dl-empty">（暂无下载记录）</div>';
+                return;
+            }
+            var html = '';
+            entries.forEach(function (e) {
+                var t = e.time ? new Date(e.time) : null;
+                var timeStr = t ? (t.getMonth() + 1) + '/' + t.getDate() : '';
+                html += '<div class="dl-item" title="' + e.id + '">' + escapeHtml(e.bookname) + ' <span class="dl-time">' + timeStr + '</span></div>';
+            });
+            listEl.innerHTML = html;
+        });
+    }
+
+    function escapeHtml(s) {
+        return String(s || '')
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
     }
 
     // ==================== 菜单视图（其他页面） ====================
@@ -65,6 +113,10 @@
             '<span class="label">GitCode 仓库（国内无需注册）</span>' +
             '<span class="badge">GitCode</span>' +
             '</a>' +
+            '</div>' +
+            '<div class="dl-section" id="dl-section">' +
+            '<div class="dl-header">已下载列表 <a href="#" id="dl-clear" class="dl-clear">清空</a></div>' +
+            '<div class="dl-list" id="dl-list"></div>' +
             '</div>';
 
         // 菜单链接点击：新标签页打开
@@ -75,6 +127,21 @@
                 if (url) chrome.tabs.create({ url: url });
             });
         });
+
+        // 渲染已下载列表 + 清空
+        renderDownloadedList();
+
+        // 清空按钮
+        var clearBtn = document.getElementById('dl-clear');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                chrome.storage.local.remove('downloaded', function () {
+                    var list = document.getElementById('dl-list');
+                    if (list) list.innerHTML = '<div class="dl-empty">（空）</div>';
+                });
+            });
+        }
 
         // 检测教材平台标签页状态（无则后台打开教材目录）
         chrome.tabs.query({}, function (tabs) {

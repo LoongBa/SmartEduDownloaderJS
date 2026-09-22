@@ -219,12 +219,29 @@
             setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
 
             showToast('下载完成', 'success');
+
+            // 记录已下载（以 contentId 为 key，去重）
+            recordDownloaded(filename);
+
             return true;
         } catch (e) {
             console.error('SmartEduDownloader 下载失败:', e);
             showToast('下载失败: ' + e.message, 'error');
             return false;
         }
+    }
+
+    // ==================== 已下载记录（chrome.storage.local） ====================
+
+    // 记录一本已下载教材：downloaded = { contentId: { bookname, time } }
+    function recordDownloaded(bookname) {
+        var idMatch = window.location.href.match(/contentId=([^&]+)/);
+        var contentId = idMatch ? idMatch[1] : ('noid_' + Date.now());
+        chrome.storage.local.get({ downloaded: {} }, function (data) {
+            var downloaded = data.downloaded || {};
+            downloaded[contentId] = { bookname: bookname, time: Date.now() };
+            chrome.storage.local.set({ downloaded: downloaded });
+        });
     }
 
     // ==================== 结果面板（下载 + 关闭 + 更多资源） ====================
