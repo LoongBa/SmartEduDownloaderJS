@@ -131,6 +131,20 @@
         return null;
     }
 
+    // ==================== 书名清理 ====================
+
+    // 去掉开头的括号描述前缀，如 "（根据2022年版课程标准修订）义务教育教科书·道德与法治九年级上册" → "义务教育教科书·道德与法治九年级上册"
+    function cleanBookname(name) {
+        var s = String(name || '').trim();
+        // 循环去掉开头的 （...） / (...) 前缀（可能多个）
+        var prev;
+        do {
+            prev = s;
+            s = s.replace(/^[（(][^）)]*[）)]\s*/, '');
+        } while (s !== prev);
+        return s.trim();
+    }
+
     // ==================== 带认证下载 ====================
 
     // 从 background 获取 webRequest 捕获的鉴权头（iframe headers= 缺失时使用）
@@ -212,7 +226,7 @@
             var url = URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = url;
-            a.download = filename + '.pdf';
+            a.download = cleanBookname(filename) + '.pdf';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -221,7 +235,7 @@
             showToast('下载完成', 'success');
 
             // 记录已下载（以 contentId 为 key，去重）
-            recordDownloaded(filename);
+            recordDownloaded(cleanBookname(filename));
 
             return true;
         } catch (e) {
@@ -348,7 +362,7 @@
             var pdfInfo = getPdfInfo();
             var bookname = '';
             if (pdfInfo && pdfInfo.url) {
-                bookname = document.title || '教材';
+                bookname = cleanBookname(document.title) || '教材';
             }
             sendResponse({ bookname: bookname, url: pdfInfo ? pdfInfo.url : '' });
         }
