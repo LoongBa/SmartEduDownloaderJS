@@ -1,4 +1,5 @@
 # Edge Add-ons 商店提交资料（中小学教材免费下载 v2.2.1）
+
 # Edge Add-ons Store Submission Kit (Free Primary & Secondary Textbook Download v2.2.1)
 
 > 提交地址 / Submit at: [Partner Center](https://partner.microsoft.com) → Edge 程序 → Create new extension
@@ -20,19 +21,19 @@
 
 ## 2. 可用性 / Availability
 
-| 字段 / Field | 值 / Value |
-|---|---|
-| 可见性 / Visibility | Public（公开 / Public） |
-| 市场 / Markets | **仅中国（先小范围发布，稳定后放开）** / **China only (pilot, expand later)** |
+| 字段 / Field        | 值 / Value                                                                    |
+| ------------------- | ----------------------------------------------------------------------------- |
+| 可见性 / Visibility | Public（公开 / Public）                                                       |
+| 市场 / Markets      | **仅中国（先小范围发布，稳定后放开）** / **China only (pilot, expand later)** |
 
 ## 3. 属性 / Properties
 
-| 字段 / Field | 值 / Value |
-|---|---|
-| 类别 / Category | **Productivity（效率工具）** —— Edge 商店无 Education 分类，下载工具归 Productivity 最贴切 / No Education category in Edge store; Productivity is the best fit for a download utility |
-| 网站 / Website | https://loongba.cn |
-| 支持联系 / Support contact | https://loongba.cn |
-| 成人内容 / Mature content | 否 / No |
+| 字段 / Field               | 值 / Value                                                                                                                                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 类别 / Category            | **Productivity（效率工具）** —— Edge 商店无 Education 分类，下载工具归 Productivity 最贴切 / No Education category in Edge store; Productivity is the best fit for a download utility |
+| 网站 / Website             | https://loongba.cn                                                                                                                                                                    |
+| 支持联系 / Support contact | https://loongba.cn                                                                                                                                                                    |
+| 成人内容 / Mature content  | 否 / No                                                                                                                                                                               |
 
 ## 4. 商店列表 / Store listings — 简体中文 / Simplified Chinese
 
@@ -56,7 +57,6 @@ Free Primary & Secondary Textbook Download
 
 【功能特点】
 • 一键下载：打开教材页面，右下角自动出现【教材】下载按钮，点击即可下载 PDF
-• 自动鉴权：自动从 PDF 播放器提取下载地址与 X-ND-AUTH 鉴权头，支持平台新版 CDN（r1~r3-ndr-private.ykt.cbern.com.cn）
 • 登录提示：未登录时自动高亮登录按钮并浮动提示（老版本教材无需登录，新版本教材需登录）
 • 智能图标：当前页为教材详情页时，扩展图标自动变为绿色，一眼识别可下载状态
 • 便捷菜单：点击扩展图标弹出菜单，一键直达教材目录、作者博客、Github/Gitee/GitCode 仓库

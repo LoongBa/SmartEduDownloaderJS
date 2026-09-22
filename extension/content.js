@@ -100,25 +100,32 @@
     function getPdfInfo() {
         // 从 pdfPlayerFirefox iframe 的 src 中提取 file= 和 headers= 参数
         var pdfPlayer = document.getElementById('pdfPlayerFirefox');
-        if (pdfPlayer && pdfPlayer.src) {
-            var fileMatch = pdfPlayer.src.match(/file=([^&#]+)/);
-            var headersMatch = pdfPlayer.src.match(/headers=([^&#]+)/);
+        if (pdfPlayer) {
+            // 🔑 用 getAttribute('src') 获取"原始编码"URL！
+            // iframe.src（DOM 属性）返回的是浏览器解析后的 URL，可能已部分解码，
+            // 而 X-ND-AUTH 签名绑定原始 URL 形式——二次解码后重编码会导致签名不匹配 → 401
+            var rawSrc = pdfPlayer.getAttribute('src') || pdfPlayer.src;
+            var fileMatch = rawSrc.match(/file=([^&#]+)/);
+            var headersMatch = rawSrc.match(/headers=([^&#]+)/);
 
             if (fileMatch) {
-                var fileUrl = decodeURIComponent(fileMatch[1]);
+                var fileUrl = fileMatch[1]; // 保持原始编码（签名基于原始 URL）
+                var displayUrl = fileUrl;
+                try { displayUrl = decodeURIComponent(fileUrl); } catch (e) {}
                 var headers = null;
 
                 if (headersMatch) {
                     try {
                         headers = JSON.parse(decodeURIComponent(headersMatch[1]));
                     } catch (e) {
-                        console.warn('解析 headers 失败:', e);
+                        console.warn('解析 headers 失败:', e, '原始片段:', String(headersMatch[1]).slice(0, 200));
                     }
                 }
 
-                console.log('SmartEduDownloader: PDF URL:', fileUrl);
+                console.log('SmartEduDownloader: PDF URL:', displayUrl);
                 console.log('SmartEduDownloader: Auth Headers:', headers);
-                return { url: fileUrl, headers: headers };
+                console.log('SmartEduDownloader: 原始 URL:', fileUrl.slice(0, 200));
+                return { url: fileUrl, headers: headers, displayUrl: displayUrl };
             }
         }
         return null;
@@ -152,6 +159,12 @@
             var response = await fetch(pdfInfo.url, fetchOptions);
 
             if (!response.ok) {
+                if (response.status === 401) {
+                    // 鉴权失败：可能是签名与 URL 不匹配（编码问题）或 X-ND-AUTH 过期
+                    console.error('SmartEduDownloader 401:', 'URL=', pdfInfo.url);
+                    console.error('SmartEduDownloader 401 Headers:', fetchOptions.headers || '无认证头');
+                    throw new Error('下载失败: 401 鉴权无效，请刷新教材页面后重试');
+                }
                 throw new Error('下载失败: ' + response.status);
             }
 
