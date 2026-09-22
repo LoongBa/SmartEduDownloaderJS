@@ -133,6 +133,30 @@
 
     // ==================== 带认证下载 ====================
 
+    // 从 background 获取 webRequest 捕获的鉴权头（iframe headers= 缺失时使用）
+    function getCapturedHeaders() {
+        return new Promise(function (resolve) {
+            chrome.runtime.sendMessage({ type: 'get-auth-headers' }, function (resp) {
+                if (chrome.runtime.lastError) { resolve(null); return; }
+                resolve(resp || null);
+            });
+        });
+    }
+
+    // 提取自定义认证头（排除浏览器自动管理的头：host/cookie/referer 等）
+    function pickAuthHeaders(raw) {
+        if (!raw) return null;
+        var result = {};
+        var wanted = ['x-nd-auth', 'sdp-app-id', 'authorization'];
+        for (var key in raw) {
+            var lower = key.toLowerCase();
+            if (wanted.indexOf(lower) !== -1) {
+                result[key] = raw[key];
+            }
+        }
+        return Object.keys(result).length > 0 ? result : null;
+    }
+
     async function downloadPdfWithAuth(pdfInfo, filename) {
         if (!pdfInfo || !pdfInfo.url) {
             showToast('无法获取 PDF 地址', 'error');
@@ -150,10 +174,22 @@
             var fetchOptions = { method: 'GET', cache: 'reload' };
 
             // 如果有认证头，添加到请求中
+            var authHeaders = null;
             if (pdfInfo.headers) {
-                var h = Object.assign({}, pdfInfo.headers);
-                delete h['range']; delete h['Range']; // 去掉 range 才能拿完整文件
-                fetchOptions.headers = h;
+                authHeaders = Object.assign({}, pdfInfo.headers);
+                delete authHeaders['range']; delete authHeaders['Range']; // 去掉 range 才能拿完整文件
+            } else {
+                // iframe 无 headers= 参数 → 用 webRequest 捕获的真实请求头
+                var captured = await getCapturedHeaders();
+                authHeaders = pickAuthHeaders(captured);
+                if (authHeaders) {
+                    console.log('SmartEduDownloader: 使用 webRequest 捕获的鉴权头');
+                } else {
+                    console.warn('SmartEduDownloader: 未获取到鉴权头，将无认证下载');
+                }
+            }
+            if (authHeaders) {
+                fetchOptions.headers = authHeaders;
             }
 
             var response = await fetch(pdfInfo.url, fetchOptions);

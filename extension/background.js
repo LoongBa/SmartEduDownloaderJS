@@ -20,6 +20,39 @@
         128: 'icons/icon128_green.png'
     };
 
+    // ==================== 鉴权头捕获（webRequest） ====================
+    // 从 pdf.js 加载 PDF 的真实网络请求中捕获 X-ND-AUTH 等鉴权头。
+    // 某些教材的 iframe src 不含 headers= 参数，下载时必须用这里捕获的头。
+    var lastAuthHeaders = null;
+    var lastCaptureTime = 0;
+
+    chrome.webRequest.onBeforeSendHeaders.addListener(
+        function (details) {
+            if (!details.requestHeaders) return;
+            var h = {};
+            for (var i = 0; i < details.requestHeaders.length; i++) {
+                var name = details.requestHeaders[i].name;
+                h[name] = details.requestHeaders[i].value;
+            }
+            // 优先缓存含 x-nd-auth 的请求（PDF 请求），否则缓存最后一个
+            var hasAuth = !!(h['x-nd-auth'] || h['X-ND-Auth'] || h['X-ND-AUTH']);
+            if (hasAuth || !lastAuthHeaders) {
+                lastAuthHeaders = h;
+                lastCaptureTime = Date.now();
+            }
+        },
+        { urls: ['*://*.ykt.cbern.com.cn/*'] },
+        ['requestHeaders']
+    );
+
+    // content script 请求捕获的鉴权头
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if (message && message.type === 'get-auth-headers') {
+            sendResponse(lastAuthHeaders);
+        }
+        return true; // 异步响应
+    });
+
     function isTextbookDetail(url) {
         return !!(url && /contentId=/.test(url));
     }
